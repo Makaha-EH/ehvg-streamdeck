@@ -81,3 +81,7 @@ src/
   actions/                      # Teams + Open URL
   mac/run-teams-hotkey.ts       # osascript wrapper
 ```
+
+---
+
+_Initial PR branch `cursor/ehvg-plugin-bde0` — 2026-11-20._
