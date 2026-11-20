@@ -25,7 +25,7 @@ Geen geheimen of tokens in deze repo. Teams-status komt niet uit een API: de plu
 - Stream Deck-app ≥ 7.1 + device (Module 15 keys = classic 5×3)
 - Microsoft Teams desktop
 - Node.js **24+** op je PATH
-- Eenmalig: macOS **Automation**-toestemming voor Stream Deck / `osascript` bij de eerste Teams-knop (Systeeminstellingen → Privacy en beveiliging → Automatisering)
+- Eenmalig: macOS-rechten voor **Automatisering** (en zo nodig **Toegankelijkheid**) — zie [Troubleshooting Teams-knoppen](#troubleshooting-teams-knoppen-gele-driehoek)
 
 ### 1. Controleren of Node al goed staat
 
@@ -123,9 +123,56 @@ Het bestand `profiles/ehvg.streamDeckProfile` moet **eenmalig op de Mac** geëxp
 
 ## Wat Patrick eenmalig op de Mac moet doen
 
-1. **Automation:** eerste Teams-knop → macOS vraagt Automatisering → toestaan voor Stream Deck.
+1. **Rechten:** eerste Teams-knop → macOS kan om Automatisering vragen → toestaan; zo niet (of gele driehoek): zie troubleshooting hieronder.
 2. **Profiel + logo:** layout zetten, page background uit `imgs/page-background/ehvg-logo.png`, exporteren naar `profiles/ehvg.streamDeckProfile` (stappen in `profiles/README.md`).
 3. **Pack opnieuw** (`npm run pack:strict`) en intern verdelen.
+
+## Troubleshooting Teams-knoppen (gele driehoek)
+
+De gele driehoek / uitroepteken op een key is Stream Deck **`showAlert()`**: de AppleScript-hotkey (`osascript` via `run-teams-hotkey`) is mislukt. Succes toont kort een vinkje (`showOk`); de mic/cam/hand-state is alleen **optimistisch** (geen echte Teams-API).
+
+Typische oorzaken: ontbrekende macOS-rechten, Teams niet geïnstalleerd/niet te activeren, of System Events mag geen toetsen sturen.
+
+### 1. Automatisering (verplicht)
+
+**Sonoma / Sequoia — exact pad:**
+
+1. Open **Systeeminstellingen** (System Settings).
+2. Ga naar **Privacy en beveiliging** → **Automatisering** (Privacy & Security → Automation).
+3. Zoek in de lijst links o.a. **Stream Deck** (soms *Elgato Stream Deck*). Bij Linked Development kan ook **node** of de plugin-runtime verschijnen.
+4. Zet aan wat nodig is om andere apps aan te sturen, met name:
+   - **Systeemgebeurtenissen** / **System Events**
+   - **Microsoft Teams** (of *Microsoft Teams (work or school)*)
+5. Sluit Stream Deck volledig (Cmd+Q) en open opnieuw. Druk opnieuw op een Teams-knop.
+
+Als er **geen** popup was bij de eerste druk: macOS toont die vaak één keer; daarna moet je het handmatig in Automatisering aanzetten zoals hierboven.
+
+### 2. Toegankelijkheid (indien keystrokes blijven falen)
+
+System Events heeft soms ook Toegankelijkheid nodig om `keystroke` te sturen:
+
+1. **Systeeminstellingen** → **Privacy en beveiliging** → **Toegankelijkheid** (Accessibility).
+2. Zet **Stream Deck** (en zo nodig **osascript** / **Terminal** als je daar test) **aan**.
+3. Stream Deck herstarten, opnieuw Teams-knop testen.
+
+### 3. Sneltest in Terminal
+
+Teams desktop open laten, daarna:
+
+```bash
+# Mag Teams activeren? (kan Automatisering vragen voor Terminal)
+osascript -e 'tell application id "com.microsoft.teams2" to activate'
+
+# Mag System Events de frontmost app lezen?
+osascript -e 'tell application "System Events" to get name of first application process whose frontmost is true'
+```
+
+Werkt dit in Terminal maar niet vanaf de Stream Deck-key → rechten ontbreken voor **Stream Deck**, niet voor Terminal. Falen beide met een permission-/(-1743)/not authorized-fout → eerst Automatisering (en zo nodig Toegankelijkheid) fixen, dan Stream Deck herstarten.
+
+### 4. Teams zelf
+
+- Microsoft Teams **desktop** moet geïnstalleerd zijn (bundle `com.microsoft.teams2` of `com.microsoft.teams`).
+- Browser-only Teams werkt niet met deze hotkeys.
 
 ## Structuur
 
