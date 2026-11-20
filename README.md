@@ -139,23 +139,48 @@ Typische oorzaken: ontbrekende macOS-rechten, Teams niet geïnstalleerd/niet te 
 
 1. Open **Systeeminstellingen** (System Settings).
 2. Ga naar **Privacy en beveiliging** → **Automatisering** (Privacy & Security → Automation).
-3. Zoek in de lijst links o.a. **Stream Deck** (soms *Elgato Stream Deck*). Bij Linked Development kan ook **node** of de plugin-runtime verschijnen.
+3. Zoek in de lijst links **Stream Deck** (soms *Elgato Stream Deck*). De plugin-UUID `com.ehvg.streamdeck` verschijnt **niet** als aparte app in deze lijst — TCC hangt aan de Stream Deck-host (bundle id `com.elgato.StreamDeck`), die `osascript` namens de plugin start.
 4. Zet aan wat nodig is om andere apps aan te sturen, met name:
    - **Systeemgebeurtenissen** / **System Events**
    - **Microsoft Teams** (of *Microsoft Teams (work or school)*)
-5. Sluit Stream Deck volledig (Cmd+Q) en open opnieuw. Druk opnieuw op een Teams-knop.
+5. Sluit Stream Deck volledig (**Stream Deck** → **Quit Stream Deck** / Cmd+Q) en open opnieuw. Druk opnieuw op een Teams-knop.
 
-Als er **geen** popup was bij de eerste druk: macOS toont die vaak één keer; daarna moet je het handmatig in Automatisering aanzetten zoals hierboven.
+#### Automatisering-lijst is leeg / Stream Deck ontbreekt
 
-### 2. Toegankelijkheid (indien keystrokes blijven falen)
+macOS toont hier alleen apps die al eens Apple Events hebben aangevraagd. Lege lijst = nog geen (geldige) TCC-registratie. Doe dit in volgorde:
 
-System Events heeft soms ook Toegankelijkheid nodig om `keystroke` te sturen:
+1. **Toegankelijkheid eerst**  
+   **Systeeminstellingen** → **Privacy en beveiliging** → **Toegankelijkheid** → **Stream Deck** aanzetten (schakelaar aan).  
+   Staat Stream Deck er niet? Klik **+** en voeg toe:  
+   `/Applications/Stream Deck.app`
 
-1. **Systeeminstellingen** → **Privacy en beveiliging** → **Toegankelijkheid** (Accessibility).
-2. Zet **Stream Deck** (en zo nodig **osascript** / **Terminal** als je daar test) **aan**.
-3. Stream Deck herstarten, opnieuw Teams-knop testen.
+2. **Teams desktop open** laten (niet alleen browser).
 
-### 3. Sneltest in Terminal
+3. **Stream Deck hard herstarten**  
+   Cmd+Q (of Activity Monitor → Stream Deck → Quit). Controleer dat er geen “Stream Deck” meer in Activity Monitor staat. Open Stream Deck opnieuw.
+
+4. **Eerste osascript-trigger**  
+   Druk op een EHVG Teams-knop (Mute/Camera/Hand). Er hoort een macOS-popup te komen (“Stream Deck wil Systeemgebeurtenissen / Microsoft Teams besturen”) → **OK**.  
+   Open daarna opnieuw **Automatisering**: Stream Deck zou links moeten staan met toggles voor System Events / Teams.
+
+5. **Nog steeds leeg? TCC reset (Terminal)** — Stream Deck eerst Quitten, daarna:
+
+   ```bash
+   tccutil reset AppleEvents com.elgato.StreamDeck
+   tccutil reset Accessibility com.elgato.StreamDeck
+   ```
+
+   Optioneel breder (raakt ook andere apps hun Automatisering-prompts):
+
+   ```bash
+   tccutil reset AppleEvents
+   ```
+
+   Open Stream Deck opnieuw → Teams-knop → popup toestaan → controleer Automatisering-lijst.
+
+6. Werkt Terminal-`osascript` wél maar de key niet: rechten staan dan voor **Terminal**, niet voor Stream Deck — blijf bij stappen 1–5 hierboven.
+
+### 2. Sneltest in Terminal
 
 Teams desktop open laten, daarna:
 
@@ -167,9 +192,9 @@ osascript -e 'tell application id "com.microsoft.teams2" to activate'
 osascript -e 'tell application "System Events" to get name of first application process whose frontmost is true'
 ```
 
-Werkt dit in Terminal maar niet vanaf de Stream Deck-key → rechten ontbreken voor **Stream Deck**, niet voor Terminal. Falen beide met een permission-/(-1743)/not authorized-fout → eerst Automatisering (en zo nodig Toegankelijkheid) fixen, dan Stream Deck herstarten.
+Werkt dit in Terminal maar niet vanaf de Stream Deck-key → rechten ontbreken voor **Stream Deck**, niet voor Terminal. Falen beide met een permission-/(-1743)/not authorized-fout → eerst Automatisering + Toegankelijkheid fixen, dan Stream Deck herstarten.
 
-### 4. Teams zelf
+### 3. Teams zelf
 
 - Microsoft Teams **desktop** moet geïnstalleerd zijn (bundle `com.microsoft.teams2` of `com.microsoft.teams`).
 - Browser-only Teams werkt niet met deze hotkeys.
