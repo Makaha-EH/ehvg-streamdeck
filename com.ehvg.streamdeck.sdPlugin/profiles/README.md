@@ -21,17 +21,21 @@ Het bestand `ehvg.streamDeckProfile` hoort hier. Zonder Stream Deck-hardware kan
 
 5. **Page background (logo over alle keys):**
    - Rechtsklik op een key → **Set from file…** (page background)
-   - Kies `imgs/page-background/ehvg-logo.png` (960×576) of `ehvg-logo-480x288.png`
+   - Kies de full-size logo (voorkeur):
+     `com.ehvg.streamdeck.sdPlugin/imgs/page-background/ehvg-logo.png` (960×576)
+   - Alternatief: `…/ehvg-logo-480x288.png` (480×288)
    - Optioneel: **Use current as default** voor het hele profiel
    - Key-iconen zijn transparant zodat het logo zichtbaar blijft
 
 6. Exporteer het profiel:
    - Voorkeuren → Profiles → rechtsklik **EHVG** → **Export**
    - Sla op als `com.ehvg.streamdeck.sdPlugin/profiles/ehvg.streamDeckProfile`
+     (exacte bestandsnaam; naast deze README)
 
-7. Opnieuw packen:
+7. Opnieuw packen (met validatie):
    ```bash
-   npm run pack
+   npm run pack:strict
    ```
+   (of `npm run pack` als je validatiefouten tijdelijk wilt negeren)
 
 Daarna wordt het profiel bij installatie van de `.streamDeckPlugin` aangeboden (`AutoInstall: true`).

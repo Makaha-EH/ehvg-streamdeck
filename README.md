@@ -125,7 +125,7 @@ Het bestand `profiles/ehvg.streamDeckProfile` moet **eenmalig op de Mac** geëxp
 
 1. **Automation:** eerste Teams-knop → macOS vraagt Automatisering → toestaan voor Stream Deck.
 2. **Profiel + logo:** layout zetten, page background uit `imgs/page-background/ehvg-logo.png`, exporteren naar `profiles/ehvg.streamDeckProfile` (stappen in `profiles/README.md`).
-3. **Pack opnieuw** (`npm run pack`) en intern verdelen.
+3. **Pack opnieuw** (`npm run pack:strict`) en intern verdelen.
 
 ## Structuur
 
