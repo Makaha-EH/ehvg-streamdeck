@@ -20,18 +20,60 @@ Geen geheimen of tokens in deze repo. Teams-status komt niet uit een API: de plu
 | Teams Raise Hand | ⌘⇧K | idem |
 | Open URL | — | Property inspector: titel + URL → `streamDeck.system.openUrl` |
 
-## Vereisten (Mac)
+## macOS vereisten / setup
 
 - Stream Deck-app ≥ 7.1 + device (Module 15 keys = classic 5×3)
-- Node.js **24+** (bijv. via nvm)
 - Microsoft Teams desktop
+- Node.js **24+** op je PATH (bij voorkeur via [nvm](https://github.com/nvm-sh/nvm))
 - Eenmalig: macOS **Automation**-toestemming voor Stream Deck / `osascript` bij de eerste Teams-knop (Systeeminstellingen → Privacy en beveiliging → Automatisering)
+
+### 1. Node.js 24+ installeren (nvm, voorkeur)
+
+In Terminal:
+
+```bash
+# nvm installeren (als je het nog niet hebt)
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+```
+
+Sluit Terminal en open een nieuw venster (of laad je shell-config opnieuw), daarna:
+
+```bash
+nvm install 24
+nvm use 24
+nvm alias default 24
+```
+
+### 2. nvm / Node op PATH (Terminal)
+
+De nvm-installer voegt normaal regels toe aan `~/.zshrc`. Controleer dat daar iets staat als:
+
+```bash
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+```
+
+Open daarna een **nieuwe** Terminal. De Stream Deck CLI (`streamdeck` / `@elgato/cli`) verwacht `node` en `npm` op je PATH; zonder dat werken `npx streamdeck …` en `npm run pack` niet.
+
+Verifieer:
+
+```bash
+node -v   # → v24.x of nieuwer
+npm -v
+which node
+```
+
+### 3. CLI + project installeren
+
+```bash
+npm install -g @elgato/cli   # Stream Deck CLI (streamdeck)
+npm install
+npm run build                # → com.ehvg.streamdeck.sdPlugin/bin/plugin.js
+```
 
 ## Lokaal ontwikkelen
 
 ```bash
-npm install
-npm run build          # → com.ehvg.streamdeck.sdPlugin/bin/plugin.js
 npm run watch          # hot-reload + streamdeck restart
 ```
 
