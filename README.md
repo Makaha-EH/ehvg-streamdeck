@@ -24,12 +24,35 @@ Geen geheimen of tokens in deze repo. Teams-status komt niet uit een API: de plu
 
 - Stream Deck-app ≥ 7.1 + device (Module 15 keys = classic 5×3)
 - Microsoft Teams desktop
-- Node.js **24+** op je PATH (bij voorkeur via [nvm](https://github.com/nvm-sh/nvm))
+- Node.js **24+** op je PATH
 - Eenmalig: macOS **Automation**-toestemming voor Stream Deck / `osascript` bij de eerste Teams-knop (Systeeminstellingen → Privacy en beveiliging → Automatisering)
 
-### 1. Node.js 24+ installeren (nvm, voorkeur)
+### 1. Controleren of Node al goed staat
 
 In Terminal:
+
+```bash
+node -v
+npm -v
+```
+
+Staat er **v24.x of nieuwer**? Dan kun je installatie overslaan en door naar [§3 CLI + project](#3-cli--project-installeren).
+
+Geen `node` / te oude versie → kies hieronder **A of B**.
+
+### 2. Node.js 24+ installeren (kies één)
+
+#### A. Officiële macOS-installer (nodejs.org)
+
+Patrick gebruikt deze route.
+
+1. Ga naar [https://nodejs.org](https://nodejs.org) en download de **LTS / Current macOS-installer** voor Node **24+**.
+2. Draai het `.pkg` en volg de wizard.
+3. Open een **nieuwe** Terminal.
+
+**PATH:** de installer zet `node` en `npm` meestal direct op je PATH. Verifieer met `node -v`, `npm -v` en `which node`. Werkt het niet in Terminal, herstart Terminal of log opnieuw in.
+
+#### B. Via nvm
 
 ```bash
 # nvm installeren (als je het nog niet hebt)
@@ -44,24 +67,16 @@ nvm use 24
 nvm alias default 24
 ```
 
-### 2. nvm / Node op PATH (Terminal)
-
-De nvm-installer voegt normaal regels toe aan `~/.zshrc`. Controleer dat daar iets staat als:
+**PATH:** nvm staat niet standaard globaal op PATH; de installer voegt regels toe aan `~/.zshrc`. Controleer dat daar iets staat als:
 
 ```bash
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 ```
 
-Open daarna een **nieuwe** Terminal. De Stream Deck CLI (`streamdeck` / `@elgato/cli`) verwacht `node` en `npm` op je PATH; zonder dat werken `npx streamdeck …` en `npm run pack` niet.
+Open daarna een **nieuwe** Terminal en verifieer met `node -v`, `npm -v` en `which node`.
 
-Verifieer:
-
-```bash
-node -v   # → v24.x of nieuwer
-npm -v
-which node
-```
+De Stream Deck CLI (`streamdeck` / `@elgato/cli`) verwacht `node` en `npm` op je PATH; zonder dat werken `npx streamdeck …` en `npm run pack` niet.
 
 ### 3. CLI + project installeren
 
