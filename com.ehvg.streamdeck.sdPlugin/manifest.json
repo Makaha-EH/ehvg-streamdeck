@@ -1,0 +1,119 @@
+{
+	"$schema": "https://schemas.elgato.com/streamdeck/plugins/manifest.json",
+	"UUID": "com.ehvg.streamdeck",
+	"Name": "EHVG",
+	"Version": "0.1.0.0",
+	"Author": "EHVG",
+	"Category": "EHVG",
+	"CategoryIcon": "imgs/plugin/category-icon",
+	"Description": "Private EHVG Stream Deck plugin for macOS: Microsoft Teams mute/camera/hand and Open URL. Not published on the Elgato Marketplace.",
+	"Icon": "imgs/plugin/marketplace",
+	"CodePath": "bin/plugin.js",
+	"SDKVersion": 3,
+	"Software": {
+		"MinimumVersion": "7.1"
+	},
+	"OS": [
+		{
+			"Platform": "mac",
+			"MinimumVersion": "12"
+		}
+	],
+	"Nodejs": {
+		"Version": "24",
+		"Debug": "enabled"
+	},
+	"Actions": [
+		{
+			"Name": "Teams Mute",
+			"UUID": "com.ehvg.streamdeck.teams-mute",
+			"Icon": "imgs/actions/mute/icon",
+			"Tooltip": "Mute/unmute Microsoft Teams (⌘⇧M)",
+			"Controllers": [
+				"Keypad"
+			],
+			"DisableAutomaticStates": true,
+			"States": [
+				{
+					"Name": "Unmuted",
+					"Image": "imgs/actions/mute/key",
+					"TitleAlignment": "bottom"
+				},
+				{
+					"Name": "Muted",
+					"Image": "imgs/actions/mute/key-active",
+					"TitleAlignment": "bottom"
+				}
+			]
+		},
+		{
+			"Name": "Teams Camera",
+			"UUID": "com.ehvg.streamdeck.teams-camera",
+			"Icon": "imgs/actions/camera/icon",
+			"Tooltip": "Toggle Microsoft Teams camera (⌘⇧O)",
+			"Controllers": [
+				"Keypad"
+			],
+			"DisableAutomaticStates": true,
+			"States": [
+				{
+					"Name": "Camera On",
+					"Image": "imgs/actions/camera/key",
+					"TitleAlignment": "bottom"
+				},
+				{
+					"Name": "Camera Off",
+					"Image": "imgs/actions/camera/key-active",
+					"TitleAlignment": "bottom"
+				}
+			]
+		},
+		{
+			"Name": "Teams Raise Hand",
+			"UUID": "com.ehvg.streamdeck.teams-raise-hand",
+			"Icon": "imgs/actions/raise-hand/icon",
+			"Tooltip": "Raise/lower hand in Microsoft Teams (⌘⇧K)",
+			"Controllers": [
+				"Keypad"
+			],
+			"DisableAutomaticStates": true,
+			"States": [
+				{
+					"Name": "Hand Down",
+					"Image": "imgs/actions/raise-hand/key",
+					"TitleAlignment": "bottom"
+				},
+				{
+					"Name": "Hand Raised",
+					"Image": "imgs/actions/raise-hand/key-active",
+					"TitleAlignment": "bottom"
+				}
+			]
+		},
+		{
+			"Name": "Open URL",
+			"UUID": "com.ehvg.streamdeck.open-url",
+			"Icon": "imgs/actions/open-url/icon",
+			"Tooltip": "Open a configurable URL in the default browser",
+			"PropertyInspectorPath": "ui/open-url.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/open-url/key",
+					"TitleAlignment": "bottom"
+				}
+			]
+		}
+	],
+	"Profiles": [
+		{
+			"Name": "profiles/ehvg",
+			"DeviceType": 0,
+			"Readonly": false,
+			"DontAutoSwitchWhenInstalled": false,
+			"AutoInstall": true
+		}
+	]
+}
