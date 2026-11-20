@@ -47,7 +47,7 @@ Geen `node` / te oude versie → kies hieronder **A of B**.
 Patrick gebruikt deze route.
 
 1. Ga naar [https://nodejs.org](https://nodejs.org) en download de **LTS / Current macOS-installer** voor Node **24+**.
-2. Draai het `.pkg` en volg de wizard.
+2. Draai het `.pkg` en volg de wizard (macOS kan om een admin-wachtwoord vragen).
 3. Open een **nieuwe** Terminal.
 
 **PATH:** de installer zet `node` en `npm` meestal direct op je PATH. Verifieer met `node -v`, `npm -v` en `which node`. Werkt het niet in Terminal, herstart Terminal of log opnieuw in.
@@ -81,10 +81,12 @@ De Stream Deck CLI (`streamdeck` / `@elgato/cli`) verwacht `node` en `npm` op je
 ### 3. CLI + project installeren
 
 ```bash
-npm install -g @elgato/cli   # Stream Deck CLI (streamdeck)
+npm install -g @elgato/cli   # Stream Deck CLI (streamdeck); soms sudo nodig
 npm install
 npm run build                # → com.ehvg.streamdeck.sdPlugin/bin/plugin.js
 ```
+
+Sommige stappen (nodejs.org-installer, globale `npm install -g`) kunnen om **admin** / `sudo` vragen.
 
 ## Lokaal ontwikkelen
 
